@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* Look: the BÖVD logo — a black void, hairline structure, one cyan accent.
+   Shapes are squared like a flight checklist; numbers are set in a monospace face. */
+@theme {
+  --color-bg: #05070c;
+  --color-panel: #0b1019;
+  --color-panel2: #121926;
+  --color-line: #1f2a3c;
+  --color-ink: #eef2f8;
+  --color-muted: #8f9bb0;
+  --color-accent: #22b8e6;
+  --color-ok: #46d39a;
+  --color-warn: #f2b441;
+  --color-bad: #ff6b6b;
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Noto Sans Arabic", sans-serif;
+  --font-mono: "Cascadia Mono", "Cascadia Code", Consolas, ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* viewport contract: narrow 375 / medium 768 (md) / wide 1280 (xl) */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+input[type="range"],
+input[type="checkbox"] {
+  accent-color: var(--color-accent);
+}
+
+/* Arabic letters join; extra letter spacing breaks the words apart */
+[dir="rtl"] * {
+  letter-spacing: 0 !important;
+}
+
+@keyframes pulse-ring {
+  0% { opacity: 0.55; transform: scale(1); }
+  100% { opacity: 0; transform: scale(2.1); }
+}
+.pulse-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring { animation: none; opacity: 0.3; }
+}
+
+@media print {
+  body { background: #fff; color: #000; }
+}
