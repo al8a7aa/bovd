@@ -8,7 +8,9 @@ import { tr } from '../i18n'
 import { Card, PageTitle, SectionTitle } from '../components/ui'
 
 const EXTRA_SOURCES = [
-  'NASA Human Research Program — the five hazards of human spaceflight',
+  'NASA Human Research Program — 5 Hazards of Human Spaceflight (nasa.gov/hrp/hazards)',
+  'NASA Human Research Program — Risks of Human Spaceflight (nasa.gov/hrp/risks)',
+  'Canadian Space Agency — Monitoring Radiation for Astronaut Health (2026)',
   'NASA-STD-3001 — 600 mSv career radiation limit',
   'NASA DONKI / NOAA SWPC GOES — live solar flare reports',
 ]
