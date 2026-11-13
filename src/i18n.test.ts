@@ -8,6 +8,7 @@ import { ENVIRONMENTS, HAZARDS } from './data/environments'
 import { CREW } from './data/crew'
 import { SCHEDULE } from './data/schedule'
 import { MODELS } from './engine/helper'
+import { PROMPTS } from './pages/Journal'
 import { SCENARIOS } from './engine/seed'
 import { badges, dailyMissions } from './engine/gamify'
 
@@ -27,6 +28,7 @@ export function allTexts(): string[] {
   for (const c of CREW) add(c.name)
   for (const t of SCHEDULE) add(t.label, t.detail)
   for (const m of MODELS) add(m.name, m.note)
+  add('Journal', 'Private notes that stay on this device.', ...PROMPTS)
   add('The key was not accepted. Check it and paste it again.', 'Too many requests for this key right now. Wait a minute and try again.', 'No link to the online helper. Use the on-device helper instead.', 'The online helper declined to answer this question.', 'The online helper had a problem. Try again.')
   add('Plan', 'Report', 'More', 'Helper', 'An AI model on this device that explains your report.', 'Explain my health status in simple words.', 'What should I do first?', 'Why do these readings matter in space?', 'Charts of each reading over time.', 'A summary to send to the flight surgeon.', 'Where you are, the five hazards, and demo controls.')
   for (const s of SCENARIOS) add(s.name, s.what)

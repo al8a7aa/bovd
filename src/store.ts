@@ -39,6 +39,9 @@ interface State {
   /** ticked plan tasks and alert steps: crew id → mission day → keys */
   done: Record<string, Record<number, string[]>>
   timers: Timer[]
+  /** private journal text: crew id → mission day → entry. Never leaves the device. */
+  journal: Record<string, Record<number, string>>
+  setJournal: (day: number, text: string) => void
   setEnv: (id: EnvId) => void
   setActive: (id: string) => void
   saveEntry: (day: number, entry: Entry) => void
@@ -56,6 +59,7 @@ const demoState = () => ({
   demo: true,
   done: {},
   timers: [],
+  journal: {},
 })
 
 const NONE: string[] = []
@@ -82,6 +86,14 @@ export const useStore = create<State>()(
         const next = list.includes(key) ? list.filter((k) => k !== key) : [...list, key]
         set({ done: { ...done, [activeId]: { ...mine, [day]: next } } })
       },
+      setJournal: (day, text) => {
+        const { journal, activeId } = get()
+        const mine = { ...(journal[activeId] ?? {}) }
+        // an empty entry is removed rather than kept as a blank day
+        if (text.trim()) mine[day] = text.trim()
+        else delete mine[day]
+        set({ journal: { ...journal, [activeId]: mine } })
+      },
       startTimer: (label, minutes) =>
         set({ timers: [...get().timers, { id: `${Date.now()}`, label, endsAt: Date.now() + minutes * 60_000 }] }),
       clearTimer: (id) => set({ timers: get().timers.filter((t) => t.id !== id) }),
@@ -92,7 +104,7 @@ export const useStore = create<State>()(
         fresh.records[activeId] = applyScenario(fresh.records[activeId], missionDay(fresh.startDate), id)
         set(fresh)
       },
-      startOwnMission: () => set({ startDate: isoDaysAgo(0), records: {}, demo: false, done: {}, timers: [] }),
+      startOwnMission: () => set({ startDate: isoDaysAgo(0), records: {}, demo: false, done: {}, timers: [], journal: {} }),
     }),
     { name: 'bovd-v2' },
   ),

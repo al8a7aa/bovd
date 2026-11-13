@@ -7,6 +7,7 @@ const ABOUT: Partial<Record<Page, string>> = {
   trends: 'Charts of each reading over time.',
   report: 'A summary to send to the flight surgeon.',
   ask: 'An AI model on this device that explains your report.',
+  journal: 'Private notes that stay on this device.',
   mission: 'Where you are, the five hazards, and demo controls.',
 }
 

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Activity, CalendarClock, ClipboardCheck, FileText, Languages, MessageCircle, LayoutDashboard, Menu, PersonStanding, Rocket } from 'lucide-react'
+import { Activity, CalendarClock, ClipboardCheck, FileText, Languages, NotebookPen, MessageCircle, LayoutDashboard, Menu, PersonStanding, Rocket } from 'lucide-react'
 import type { IndicatorId } from './data/indicators'
 import { useStore } from './store'
 import { useCrewStatus, useHealth } from './hooks'
@@ -18,8 +18,9 @@ import Report from './pages/Report'
 import Mission from './pages/Mission'
 import More from './pages/More'
 import Helper from './pages/Helper'
+import Journal from './pages/Journal'
 
-export type Page = 'home' | 'checkin' | 'plan' | 'body' | 'trends' | 'report' | 'ask' | 'mission' | 'more'
+export type Page = 'home' | 'checkin' | 'plan' | 'body' | 'trends' | 'report' | 'ask' | 'journal' | 'mission' | 'more'
 
 type NavItem = { id: Page; label: string; icon: typeof Activity }
 /** Computer: every destination in the side rail. */
@@ -31,11 +32,12 @@ const RAIL: NavItem[] = [
   { id: 'trends', label: 'Trends', icon: Activity },
   { id: 'report', label: 'Report', icon: FileText },
   { id: 'ask', label: 'Helper', icon: MessageCircle },
+  { id: 'journal', label: 'Journal', icon: NotebookPen },
   { id: 'mission', label: 'Mission', icon: Rocket },
 ]
 /** Phone: the four daily jobs under the thumb, the rest behind "More". */
 const TABS: NavItem[] = [...RAIL.slice(0, 4), { id: 'more', label: 'More', icon: Menu }]
-const IN_MORE: Page[] = ['more', 'trends', 'report', 'ask', 'mission']
+const IN_MORE: Page[] = ['more', 'trends', 'report', 'ask', 'journal', 'mission']
 
 export default function App() {
   const [page, setPage] = useState<Page>('home')
@@ -132,6 +134,7 @@ export default function App() {
           {page === 'trends' && <Trends id={trendId} setId={setTrendId} />}
           {page === 'report' && <Report />}
           {page === 'ask' && <Helper key={activeId} />}
+          {page === 'journal' && <Journal key={activeId} />}
           {page === 'mission' && <Mission />}
           {page === 'more' && <More go={setPage} items={RAIL.slice(4)} />}
         </main>
